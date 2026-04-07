@@ -22,10 +22,6 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(24),
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
-            if (state is LoginSuccess) {
-              Navigator.pushReplacementNamed(context, '/classes');
-            }
-
             if (state is LoginFailure) {
               ScaffoldMessenger.of(
                 context,

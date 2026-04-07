@@ -1,19 +1,23 @@
 class ClassEntity {
   final String id;
-  final String title;
+  final String name;
   final String description;
-  final String instructor;
-  final String scheduledAt;
-  final int? duration;
-  final int? availableSpots;
+  final String date;
+  final int capacity;
+  final String teacherName;
+  final int availableSpots;
+  final int confirmedReservations;
+  final int waitlistCount;
 
   ClassEntity({
     required this.id,
-    required this.title,
+    required this.name,
     required this.description,
-    required this.instructor,
-    required this.scheduledAt,
-    this.duration,
-    this.availableSpots,
+    required this.date,
+    required this.capacity,
+    required this.teacherName,
+    required this.availableSpots,
+    required this.confirmedReservations,
+    required this.waitlistCount,
   });
 }

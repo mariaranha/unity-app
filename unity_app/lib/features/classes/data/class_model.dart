@@ -3,23 +3,29 @@ import 'package:unity_app/features/classes/domain/class_entity.dart';
 class ClassModel extends ClassEntity {
   ClassModel({
     required super.id,
-    required super.title,
+    required super.name,
     required super.description,
-    required super.instructor,
-    required super.scheduledAt,
-    super.duration,
-    super.availableSpots,
+    required super.date,
+    required super.capacity,
+    required super.teacherName,
+    required super.availableSpots,
+    required super.confirmedReservations,
+    required super.waitlistCount,
   });
 
   factory ClassModel.fromJson(Map<String, dynamic> json) {
+    final teacher = json['teacher'] as Map<String, dynamic>;
+
     return ClassModel(
       id: json['id'],
-      title: json['title'],
+      name: json['name'],
       description: json['description'] ?? '',
-      instructor: json['instructor'] ?? '',
-      scheduledAt: json['scheduledAt'] ?? json['scheduled_at'] ?? '',
-      duration: json['duration'],
-      availableSpots: json['availableSpots'] ?? json['available_spots'],
+      date: json['date'],
+      capacity: json['capacity'],
+      teacherName: teacher['name'],
+      availableSpots: json['availableSpots'],
+      confirmedReservations: json['confirmedReservations'],
+      waitlistCount: json['waitlistCount'],
     );
   }
 }

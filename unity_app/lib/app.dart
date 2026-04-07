@@ -14,15 +14,10 @@ class MyApp extends StatelessWidget {
       title: 'Unity App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.blue, useMaterial3: true),
-      routes: {
-        '/classes': (_) => const ClassesPage(),
-      },
       home: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          if (state is LoginLoading) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
+          if (state is LoginSuccess) {
+            return const ClassesPage();
           }
 
           return const LoginPage();

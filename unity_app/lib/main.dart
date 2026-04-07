@@ -14,6 +14,7 @@ import 'package:unity_app/features/classes/data/classes_remote_data_source.dart'
 import 'package:unity_app/features/classes/data/classes_repository_impl.dart';
 import 'package:unity_app/features/classes/domain/get_classes_usecase.dart';
 import 'package:unity_app/features/classes/presentation/bloc/classes_bloc.dart';
+import 'package:unity_app/features/classes/presentation/bloc/classes_event.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,9 @@ void main() {
 
   // 📚 Classes
   final classesRemoteDatasource = ClassesRemoteDataSource(apiClient);
-  final classesRepository = ClassesRepositoryImpl(remote: classesRemoteDatasource);
+  final classesRepository = ClassesRepositoryImpl(
+    remote: classesRemoteDatasource,
+  );
   final getClassesUsecase = GetClassesUseCase(classesRepository);
 
   runApp(
@@ -46,7 +49,8 @@ void main() {
         ),
         BlocProvider<LoginBloc>(create: (_) => LoginBloc(loginUsecase)),
         BlocProvider<ClassesBloc>(
-          create: (_) => ClassesBloc(getClassesUsecase)..add(ClassesLoadRequested()),
+          create: (_) =>
+              ClassesBloc(getClassesUsecase)..add(ClassesLoadRequested()),
         ),
       ],
       child: const MyApp(),

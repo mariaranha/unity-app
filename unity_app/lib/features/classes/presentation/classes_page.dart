@@ -33,9 +33,8 @@ class ClassesPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   OutlinedButton(
-                    onPressed: () => context
-                        .read<ClassesBloc>()
-                        .add(ClassesLoadRequested()),
+                    onPressed: () =>
+                        context.read<ClassesBloc>().add(ClassesLoadRequested()),
                     child: const Text('Tentar novamente'),
                   ),
                 ],
@@ -87,7 +86,7 @@ class _ClassCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              classEntity.title,
+              classEntity.name,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -108,25 +107,22 @@ class _ClassCard extends StatelessWidget {
               spacing: 8,
               runSpacing: 6,
               children: [
-                if (classEntity.instructor.isNotEmpty)
+                _InfoChip(
+                  icon: Icons.person_outline,
+                  label: classEntity.teacherName,
+                ),
+                _InfoChip(
+                  icon: Icons.schedule_outlined,
+                  label: _formatDate(classEntity.date),
+                ),
+                _InfoChip(
+                  icon: Icons.event_seat_outlined,
+                  label: '${classEntity.availableSpots} vagas',
+                ),
+                if (classEntity.waitlistCount > 0)
                   _InfoChip(
-                    icon: Icons.person_outline,
-                    label: classEntity.instructor,
-                  ),
-                if (classEntity.scheduledAt.isNotEmpty)
-                  _InfoChip(
-                    icon: Icons.schedule_outlined,
-                    label: classEntity.scheduledAt,
-                  ),
-                if (classEntity.duration != null)
-                  _InfoChip(
-                    icon: Icons.timer_outlined,
-                    label: '${classEntity.duration} min',
-                  ),
-                if (classEntity.availableSpots != null)
-                  _InfoChip(
-                    icon: Icons.event_seat_outlined,
-                    label: '${classEntity.availableSpots} vagas',
+                    icon: Icons.hourglass_empty_outlined,
+                    label: '${classEntity.waitlistCount} na fila',
                   ),
               ],
             ),
@@ -134,6 +130,19 @@ class _ClassCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatDate(String isoDate) {
+    try {
+      final dt = DateTime.parse(isoDate).toLocal();
+      final day = dt.day.toString().padLeft(2, '0');
+      final month = dt.month.toString().padLeft(2, '0');
+      final hour = dt.hour.toString().padLeft(2, '0');
+      final minute = dt.minute.toString().padLeft(2, '0');
+      return '$day/$month • $hour:$minute';
+    } catch (_) {
+      return isoDate;
+    }
   }
 }
 
