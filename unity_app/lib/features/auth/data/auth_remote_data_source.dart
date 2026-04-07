@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:unity_app/core/api/api_service.dart';
 import 'package:unity_app/features/auth/data/user_model.dart';
 
@@ -14,8 +12,6 @@ class AuthRemoteDataSource {
       body: {'email': email, 'password': password},
     );
 
-    final data = jsonDecode(response.body);
-
-    return UserModel.fromJson(data['user']);
+    return UserModel.fromJson(response['user']);
   }
 }

@@ -11,9 +11,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User> login(String email, String password) async {
-    final token = await remote.login(email, password);
-    await local.saveToken('token');
-    return token;
+    final user = await remote.login(email, password);
+    await local.saveToken(user.id);
+    return user;
   }
 
   @override
