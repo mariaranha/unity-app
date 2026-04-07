@@ -27,7 +27,14 @@ class ApiService {
   }) async {
     final uri = _uri(path);
     final resp = await client
-        .post(uri, headers: headers, body: body)
+        .post(
+          uri,
+          headers: {
+            'Content-Type': 'application/json',
+            if (headers != null) ...headers,
+          },
+          body: jsonEncode(body),
+        )
         .timeout(timeout);
     return _processResponse(resp);
   }

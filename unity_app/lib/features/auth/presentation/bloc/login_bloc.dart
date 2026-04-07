@@ -17,9 +17,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
 
     try {
-      final token = await loginUseCase(event.email, event.password);
+      final user = await loginUseCase(event.email, event.password);
 
-      emit(LoginSuccess('123'));
+      emit(LoginSuccess(user.id));
     } catch (_) {
       emit(LoginFailure('Invalid credentials'));
     }

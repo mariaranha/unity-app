@@ -10,6 +10,10 @@ import 'package:unity_app/features/auth/domain/login_usecase.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:unity_app/features/auth/presentation/bloc/login_bloc.dart';
+import 'package:unity_app/features/classes/data/classes_remote_data_source.dart';
+import 'package:unity_app/features/classes/data/classes_repository_impl.dart';
+import 'package:unity_app/features/classes/domain/get_classes_usecase.dart';
+import 'package:unity_app/features/classes/presentation/bloc/classes_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +33,11 @@ void main() {
 
   final loginUsecase = LoginUseCase(authRepository);
 
+  // 📚 Classes
+  final classesRemoteDatasource = ClassesRemoteDataSource(apiClient);
+  final classesRepository = ClassesRepositoryImpl(remote: classesRemoteDatasource);
+  final getClassesUsecase = GetClassesUseCase(classesRepository);
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -36,6 +45,9 @@ void main() {
           create: (_) => AuthBloc(authRepository)..add(AuthCheckRequested()),
         ),
         BlocProvider<LoginBloc>(create: (_) => LoginBloc(loginUsecase)),
+        BlocProvider<ClassesBloc>(
+          create: (_) => ClassesBloc(getClassesUsecase)..add(ClassesLoadRequested()),
+        ),
       ],
       child: const MyApp(),
     ),
