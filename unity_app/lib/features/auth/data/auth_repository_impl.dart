@@ -17,6 +17,23 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<void> register({
+    required String name,
+    required String email,
+    required String username,
+    required String password,
+    required String birthDate,
+  }) async {
+    await remote.register(
+      name: name,
+      email: email,
+      username: username,
+      password: password,
+      birthDate: birthDate,
+    );
+  }
+
+  @override
   Future<String?> getSavedToken() async {
     return local.getToken();
   }

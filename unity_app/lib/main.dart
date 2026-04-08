@@ -7,6 +7,7 @@ import 'package:unity_app/features/auth/data/auth_local_datasource_impl.dart';
 import 'package:unity_app/features/auth/data/auth_remote_data_source.dart';
 import 'package:unity_app/features/auth/data/auth_repository_impl.dart';
 import 'package:unity_app/features/auth/domain/login_usecase.dart';
+import 'package:unity_app/features/auth/domain/register_usecase.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:unity_app/features/auth/presentation/bloc/login_bloc.dart';
@@ -33,6 +34,7 @@ void main() {
   );
 
   final loginUsecase = LoginUseCase(authRepository);
+  final registerUsecase = RegisterUseCase(authRepository);
 
   // 📚 Classes
   final classesRemoteDatasource = ClassesRemoteDataSource(apiClient);
@@ -53,7 +55,7 @@ void main() {
               ClassesBloc(getClassesUsecase)..add(ClassesLoadRequested()),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(registerUsecase: registerUsecase),
     ),
   );
 }

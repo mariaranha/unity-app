@@ -47,13 +47,21 @@ class ClassesPage extends StatelessWidget {
               return const Center(child: Text('Nenhuma aula disponível.'));
             }
 
-            return ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.classes.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                return _ClassCard(classEntity: state.classes[index]);
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<ClassesBloc>().add(ClassesLoadRequested());
+                await context.read<ClassesBloc>().stream.firstWhere(
+                      (s) => s is ClassesLoaded || s is ClassesError,
+                    );
               },
+              child: ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemCount: state.classes.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  return _ClassCard(classEntity: state.classes[index]);
+                },
+              ),
             );
           }
 

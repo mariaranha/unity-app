@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unity_app/features/auth/domain/register_usecase.dart';
 import 'package:unity_app/features/auth/presentation/bloc/login_bloc.dart';
 import 'package:unity_app/features/auth/presentation/bloc/login_state.dart';
 import 'package:unity_app/features/auth/presentation/login_page.dart';
 import 'package:unity_app/features/classes/presentation/classes_page.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final RegisterUseCase registerUsecase;
+
+  const MyApp({super.key, required this.registerUsecase});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
             return const ClassesPage();
           }
 
-          return const LoginPage();
+          return LoginPage(registerUseCase: registerUsecase);
         },
       ),
     );
