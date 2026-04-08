@@ -12,6 +12,7 @@ import 'package:unity_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:unity_app/features/auth/presentation/bloc/login_bloc.dart';
 import 'package:unity_app/features/auth/presentation/cubit/user_cubit.dart';
+import 'package:unity_app/features/shell/presentation/cubit/navigation_cubit.dart';
 import 'package:unity_app/features/classes/data/classes_remote_data_source.dart';
 import 'package:unity_app/features/classes/data/classes_repository_impl.dart';
 import 'package:unity_app/features/classes/domain/book_class_usecase.dart';
@@ -62,6 +63,7 @@ void main() {
         ),
         BlocProvider<LoginBloc>(create: (_) => LoginBloc(loginUsecase)),
         BlocProvider<UserCubit>(create: (_) => UserCubit()),
+        BlocProvider<NavigationCubit>(create: (_) => NavigationCubit()),
         BlocProvider<ClassesBloc>(
           create: (_) =>
               ClassesBloc(getClassesUsecase)..add(ClassesLoadRequested()),

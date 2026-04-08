@@ -7,7 +7,7 @@ import 'package:unity_app/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:unity_app/features/auth/presentation/login_page.dart';
 import 'package:unity_app/features/classes/domain/book_class_usecase.dart';
 import 'package:unity_app/features/classes/domain/cancel_class_usecase.dart';
-import 'package:unity_app/features/classes/presentation/classes_page.dart';
+import 'package:unity_app/features/shell/presentation/shell_page.dart';
 
 class MyApp extends StatelessWidget {
   final RegisterUseCase registerUsecase;
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is LoginSuccess) {
-            return ClassesPage(
+            return ShellPage(
               bookClassUseCase: bookClassUsecase,
               cancelClassUseCase: cancelClassUsecase,
             );
