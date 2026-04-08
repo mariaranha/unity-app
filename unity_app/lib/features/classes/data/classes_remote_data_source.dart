@@ -12,4 +12,18 @@ class ClassesRemoteDataSource {
     final list = response as List<dynamic>;
     return list.map((e) => ClassModel.fromJson(e)).toList();
   }
+
+  Future<String> bookClass({
+    required String classId,
+    required String token,
+    required String userId,
+  }) async {
+    final response = await client.post(
+      '/classes/$classId/book',
+      headers: {'Authorization': 'Bearer $token'},
+      body: {'user_id': userId},
+    );
+
+    return response['message'] as String;
+  }
 }

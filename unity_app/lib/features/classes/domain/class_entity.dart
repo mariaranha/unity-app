@@ -8,6 +8,7 @@ class ClassEntity {
   final int availableSpots;
   final int confirmedReservations;
   final int waitlistCount;
+  final List<String> reservedUserIds;
 
   ClassEntity({
     required this.id,
@@ -19,5 +20,6 @@ class ClassEntity {
     required this.availableSpots,
     required this.confirmedReservations,
     required this.waitlistCount,
+    required this.reservedUserIds,
   });
 }

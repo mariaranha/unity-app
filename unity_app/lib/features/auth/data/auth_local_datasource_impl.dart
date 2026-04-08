@@ -20,4 +20,14 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> clearToken() async {
     await storage.delete(key: 'token');
   }
+
+  @override
+  Future<void> saveUserId(String userId) async {
+    await storage.write(key: 'user_id', value: userId);
+  }
+
+  @override
+  Future<String?> getUserId() async {
+    return await storage.read(key: 'user_id');
+  }
 }

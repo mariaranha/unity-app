@@ -11,9 +11,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User> login(String email, String password) async {
-    final user = await remote.login(email, password);
-    await local.saveToken(user.id);
-    return user;
+    final result = await remote.login(email, password);
+    await local.saveToken(result.token);
+    await local.saveUserId(result.user.id);
+    return result.user;
   }
 
   @override
@@ -36,6 +37,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<String?> getSavedToken() async {
     return local.getToken();
+  }
+
+  @override
+  Future<String?> getSavedUserId() async {
+    return local.getUserId();
   }
 
   @override

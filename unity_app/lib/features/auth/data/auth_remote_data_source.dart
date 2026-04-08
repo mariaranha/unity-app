@@ -6,13 +6,19 @@ class AuthRemoteDataSource {
 
   AuthRemoteDataSource(this.client);
 
-  Future<UserModel> login(String email, String password) async {
+  Future<({String token, UserModel user})> login(
+    String email,
+    String password,
+  ) async {
     final response = await client.post(
       '/auth/login',
       body: {'email': email, 'password': password},
     );
 
-    return UserModel.fromJson(response['user']);
+    return (
+      token: response['token'] as String,
+      user: UserModel.fromJson(response['user']),
+    );
   }
 
   Future<void> register({

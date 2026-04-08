@@ -11,8 +11,10 @@ import 'package:unity_app/features/auth/domain/register_usecase.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:unity_app/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:unity_app/features/auth/presentation/bloc/login_bloc.dart';
+import 'package:unity_app/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:unity_app/features/classes/data/classes_remote_data_source.dart';
 import 'package:unity_app/features/classes/data/classes_repository_impl.dart';
+import 'package:unity_app/features/classes/domain/book_class_usecase.dart';
 import 'package:unity_app/features/classes/domain/get_classes_usecase.dart';
 import 'package:unity_app/features/classes/presentation/bloc/classes_bloc.dart';
 import 'package:unity_app/features/classes/presentation/bloc/classes_event.dart';
@@ -42,6 +44,10 @@ void main() {
     remote: classesRemoteDatasource,
   );
   final getClassesUsecase = GetClassesUseCase(classesRepository);
+  final bookClassUsecase = BookClassUseCase(
+    classesRepository: classesRepository,
+    authRepository: authRepository,
+  );
 
   runApp(
     MultiBlocProvider(
@@ -50,12 +56,16 @@ void main() {
           create: (_) => AuthBloc(authRepository)..add(AuthCheckRequested()),
         ),
         BlocProvider<LoginBloc>(create: (_) => LoginBloc(loginUsecase)),
+        BlocProvider<UserCubit>(create: (_) => UserCubit()),
         BlocProvider<ClassesBloc>(
           create: (_) =>
               ClassesBloc(getClassesUsecase)..add(ClassesLoadRequested()),
         ),
       ],
-      child: MyApp(registerUsecase: registerUsecase),
+      child: MyApp(
+        registerUsecase: registerUsecase,
+        bookClassUsecase: bookClassUsecase,
+      ),
     ),
   );
 }

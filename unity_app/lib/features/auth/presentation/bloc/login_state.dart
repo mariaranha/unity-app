@@ -1,3 +1,5 @@
+import 'package:unity_app/features/auth/domain/user.dart';
+
 abstract class LoginState {}
 
 class LoginInitial extends LoginState {}
@@ -5,9 +7,9 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
-  final String token;
+  final User user;
 
-  LoginSuccess(this.token);
+  LoginSuccess(this.user);
 }
 
 class LoginUnauthenticated extends LoginState {}

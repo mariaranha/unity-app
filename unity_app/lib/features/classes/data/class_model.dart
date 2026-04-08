@@ -11,10 +11,12 @@ class ClassModel extends ClassEntity {
     required super.availableSpots,
     required super.confirmedReservations,
     required super.waitlistCount,
+    required super.reservedUserIds,
   });
 
   factory ClassModel.fromJson(Map<String, dynamic> json) {
     final teacher = json['teacher'] as Map<String, dynamic>;
+    final reservations = (json['reservation'] as List<dynamic>? ?? []);
 
     return ClassModel(
       id: json['id'],
@@ -26,6 +28,9 @@ class ClassModel extends ClassEntity {
       availableSpots: json['availableSpots'],
       confirmedReservations: json['confirmedReservations'],
       waitlistCount: json['waitlistCount'],
+      reservedUserIds: reservations
+          .map((r) => r['user_id'] as String)
+          .toList(),
     );
   }
 }

@@ -19,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       final user = await loginUseCase(event.email, event.password);
 
-      emit(LoginSuccess(user.id));
+      emit(LoginSuccess(user));
     } catch (_) {
       emit(LoginFailure('Invalid credentials'));
     }

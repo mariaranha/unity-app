@@ -11,4 +11,13 @@ class ClassesRepositoryImpl implements ClassesRepository {
   Future<List<ClassEntity>> getClasses() {
     return remote.getClasses();
   }
+
+  @override
+  Future<String> bookClass({
+    required String classId,
+    required String token,
+    required String userId,
+  }) {
+    return remote.bookClass(classId: classId, token: token, userId: userId);
+  }
 }
