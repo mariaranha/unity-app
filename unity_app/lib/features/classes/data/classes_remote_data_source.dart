@@ -21,7 +21,21 @@ class ClassesRemoteDataSource {
     final response = await client.post(
       '/classes/$classId/book',
       headers: {'Authorization': 'Bearer $token'},
-      body: {'user_id': userId},
+      body: {'user_id': userId}, // snake_case conforme API
+    );
+
+    return response['message'] as String;
+  }
+
+  Future<String> cancelClass({
+    required String classId,
+    required String token,
+    required String userId,
+  }) async {
+    final response = await client.post(
+      '/classes/$classId/cancel',
+      headers: {'Authorization': 'Bearer $token'},
+      body: {'userId': userId}, // camelCase conforme API (inconsistência documentada)
     );
 
     return response['message'] as String;

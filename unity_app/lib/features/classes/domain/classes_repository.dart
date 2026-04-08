@@ -8,4 +8,10 @@ abstract class ClassesRepository {
     required String token,
     required String userId,
   });
+
+  Future<String> cancelClass({
+    required String classId,
+    required String token,
+    required String userId,
+  });
 }

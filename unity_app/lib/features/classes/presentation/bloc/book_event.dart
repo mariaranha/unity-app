@@ -5,3 +5,9 @@ class BookClassRequested extends BookEvent {
 
   BookClassRequested(this.classId);
 }
+
+class CancelClassRequested extends BookEvent {
+  final String classId;
+
+  CancelClassRequested(this.classId);
+}

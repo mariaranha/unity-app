@@ -15,6 +15,7 @@ import 'package:unity_app/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:unity_app/features/classes/data/classes_remote_data_source.dart';
 import 'package:unity_app/features/classes/data/classes_repository_impl.dart';
 import 'package:unity_app/features/classes/domain/book_class_usecase.dart';
+import 'package:unity_app/features/classes/domain/cancel_class_usecase.dart';
 import 'package:unity_app/features/classes/domain/get_classes_usecase.dart';
 import 'package:unity_app/features/classes/presentation/bloc/classes_bloc.dart';
 import 'package:unity_app/features/classes/presentation/bloc/classes_event.dart';
@@ -48,6 +49,10 @@ void main() {
     classesRepository: classesRepository,
     authRepository: authRepository,
   );
+  final cancelClassUsecase = CancelClassUseCase(
+    classesRepository: classesRepository,
+    authRepository: authRepository,
+  );
 
   runApp(
     MultiBlocProvider(
@@ -65,6 +70,7 @@ void main() {
       child: MyApp(
         registerUsecase: registerUsecase,
         bookClassUsecase: bookClassUsecase,
+        cancelClassUsecase: cancelClassUsecase,
       ),
     ),
   );

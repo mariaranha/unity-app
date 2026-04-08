@@ -6,16 +6,19 @@ import 'package:unity_app/features/auth/presentation/bloc/login_state.dart';
 import 'package:unity_app/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:unity_app/features/auth/presentation/login_page.dart';
 import 'package:unity_app/features/classes/domain/book_class_usecase.dart';
+import 'package:unity_app/features/classes/domain/cancel_class_usecase.dart';
 import 'package:unity_app/features/classes/presentation/classes_page.dart';
 
 class MyApp extends StatelessWidget {
   final RegisterUseCase registerUsecase;
   final BookClassUseCase bookClassUsecase;
+  final CancelClassUseCase cancelClassUsecase;
 
   const MyApp({
     super.key,
     required this.registerUsecase,
     required this.bookClassUsecase,
+    required this.cancelClassUsecase,
   });
 
   @override
@@ -32,7 +35,10 @@ class MyApp extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is LoginSuccess) {
-            return ClassesPage(bookClassUseCase: bookClassUsecase);
+            return ClassesPage(
+              bookClassUseCase: bookClassUsecase,
+              cancelClassUseCase: cancelClassUsecase,
+            );
           }
 
           return LoginPage(registerUseCase: registerUsecase);

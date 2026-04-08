@@ -20,4 +20,13 @@ class ClassesRepositoryImpl implements ClassesRepository {
   }) {
     return remote.bookClass(classId: classId, token: token, userId: userId);
   }
+
+  @override
+  Future<String> cancelClass({
+    required String classId,
+    required String token,
+    required String userId,
+  }) {
+    return remote.cancelClass(classId: classId, token: token, userId: userId);
+  }
 }

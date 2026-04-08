@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unity_app/features/auth/presentation/cubit/user_cubit.dart';
 import 'package:unity_app/features/auth/presentation/cubit/user_state.dart';
 import 'package:unity_app/features/classes/domain/book_class_usecase.dart';
+import 'package:unity_app/features/classes/domain/cancel_class_usecase.dart';
 import 'package:unity_app/features/classes/domain/class_entity.dart';
 import 'package:unity_app/features/classes/presentation/bloc/book_bloc.dart';
 import 'package:unity_app/features/classes/presentation/bloc/book_event.dart';
@@ -13,13 +14,21 @@ import 'package:unity_app/features/classes/presentation/bloc/classes_state.dart'
 
 class ClassesPage extends StatelessWidget {
   final BookClassUseCase bookClassUseCase;
+  final CancelClassUseCase cancelClassUseCase;
 
-  const ClassesPage({super.key, required this.bookClassUseCase});
+  const ClassesPage({
+    super.key,
+    required this.bookClassUseCase,
+    required this.cancelClassUseCase,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => BookBloc(bookClassUseCase),
+      create: (_) => BookBloc(
+        bookClassUseCase: bookClassUseCase,
+        cancelClassUseCase: cancelClassUseCase,
+      ),
       child: BlocListener<BookBloc, BookState>(
         listener: (context, state) {
           if (state is BookSuccess) {
@@ -156,7 +165,14 @@ class _ClassCard extends StatelessWidget {
                             )
                           : hasReservation
                               ? OutlinedButton(
-                                  onPressed: null,
+                                  onPressed: bookState is BookLoading
+                                      ? null
+                                      : () {
+                                          context.read<BookBloc>().add(
+                                                CancelClassRequested(
+                                                    classEntity.id),
+                                              );
+                                        },
                                   style: OutlinedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 12,
